@@ -4,19 +4,36 @@ import (
 	"testing"
 )
 
-func BenchmarkEncrypt(b *testing.B) {
+func BenchmarkEncryptOAEP(b *testing.B) {
 	msg := `Invalid string`
 
 	for n := 0; n < b.N; n++ {
-		Encrypt(msg)
+		EncryptOAEP(msg)
 	}
 }
 
-func BenchmarkDecrypt(b *testing.B) {
+func BenchmarkDecryptOAEP(b *testing.B) {
 	msg := `Invalid string`
-	enMsg, _ := Encrypt(msg)
+	enMsg, _ := EncryptOAEP(msg)
 
 	for n := 0; n < b.N; n++ {
-		Decrypt(enMsg)
+		DecryptOAEP(enMsg)
+	}
+}
+
+func BenchmarkEncryptPKCS1v15(b *testing.B) {
+	msg := `Invalid string`
+
+	for n := 0; n < b.N; n++ {
+		EncryptPKCS1v15(msg)
+	}
+}
+
+func BenchmarkDecryptPKCS1v15(b *testing.B) {
+	msg := `Invalid string`
+	enMsg, _ := EncryptPKCS1v15(msg)
+
+	for n := 0; n < b.N; n++ {
+		DecryptPKCS1v15(enMsg)
 	}
 }

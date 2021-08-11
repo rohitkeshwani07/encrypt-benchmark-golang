@@ -28,14 +28,22 @@ func init() {
 	privateKey, publicKey = generateKeyPair(2048)	
 }
 
-func Encrypt(msg string) (string, error) {
+func EncryptOAEP(msg string) (string, error) {
 	encryptMsg, err := rsa.EncryptOAEP(sha256.New(), rand.Reader, publicKey, []byte(msg), nil)
 	return string(encryptMsg), err
-
 }
 
-func Decrypt(encryptMsg string) (string, error) {
+func DecryptOAEP(encryptMsg string) (string, error) {
 	msg, err := rsa.DecryptOAEP(sha256.New(), rand.Reader, privateKey, []byte(encryptMsg), nil)
 	return string(msg), err
 }
 
+func EncryptPKCS1v15(msg string) (string, error) {
+	encryptMsg, err := rsa.EncryptPKCS1v15(rand.Reader, publicKey, []byte(msg))
+	return string(encryptMsg), err
+}
+
+func DecryptPKCS1v15(encryptMsg string) (string, error) {
+	msg, err := rsa.DecryptPKCS1v15(rand.Reader, privateKey, []byte(encryptMsg))
+	return string(msg), err
+}
